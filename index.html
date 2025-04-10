@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Список завдань</title>
+    <link rel="stylesheet" href="style/styles.css">
+</head>
+<body>
+    <div class="task-list">
+        <table>
+            <thead>
+                <tr>
+                    <th>Список завдань</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody id="active-tasks">
+                <tr>
+                    <td>Опанувати HTML та CSS</td>
+                    <td><button onclick="completeTask(this)">✓</button></td>
+                </tr>
+                <tr>
+                    <td>Опанувати Git та GitHub</td>
+                    <td><button onclick="completeTask(this)">✓</button></td>
+                </tr>
+                <tr>
+                    <td>Опанувати JavaScript</td>
+                    <td><button onclick="completeTask(this)">✓</button></td>
+                </tr>
+                <tr>
+                    <td>Опанувати Node.js</td>
+                    <td><button onclick="completeTask(this)">✓</button></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="completed-tasks">
+        <h2>Виконані завдання</h2>
+        <table>
+            <tbody id="completed-tasks">
+                <!-- Completed tasks will appear here -->
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        function completeTask(button) {
+            const row = button.parentElement.parentElement;
+            const taskText = row.cells[0].textContent;
+            
+            row.remove();
+            
+            const completedTable = document.getElementById('completed-tasks');
+            const newRow = completedTable.insertRow();
+            
+            const cell1 = newRow.insertCell(0);
+            cell1.textContent = taskText;
+            cell1.classList.add('completed-task');
+            
+            const cell2 = newRow.insertCell(1);
+            cell2.innerHTML = '<button onclick="undoTask(this)">↩</button>';
+        }
+        
+        function undoTask(button) {
+            const row = button.parentElement.parentElement;
+            const taskText = row.cells[0].textContent;
+            
+            row.remove();
+            
+            const activeTable = document.getElementById('active-tasks');
+            const newRow = activeTable.insertRow();
+            
+            const cell1 = newRow.insertCell(0);
+            cell1.textContent = taskText;
+            
+            const cell2 = newRow.insertCell(1);
+            cell2.innerHTML = '<button onclick="completeTask(this)">✓</button>';
+        }
+    </script>
+</body>
+</html>
